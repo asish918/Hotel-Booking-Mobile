@@ -12,9 +12,11 @@ interface Props {
   listings: any;
 }
 
+// India Lat Long
+// 22.986021031519957, 79.34277071479039
 const INITIAL_REGION = {
-  latitude: 37.33,
-  longitude: -122,
+  latitude: 22.986021031519957,
+  longitude: 79.34277071479039,
   latitudeDelta: 9,
   longitudeDelta: 9,
 };

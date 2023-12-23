@@ -10,22 +10,16 @@ import { defaultStyles } from '@/constants/Styles';
 
 enum Strategy {
   Google = 'oauth_google',
-  Apple = 'oauth_apple',
-  Facebook = 'oauth_facebook',
 }
 const Page = () => {
   useWarmUpBrowser();
 
   const router = useRouter();
   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: 'oauth_google' });
-  const { startOAuthFlow: appleAuth } = useOAuth({ strategy: 'oauth_apple' });
-  const { startOAuthFlow: facebookAuth } = useOAuth({ strategy: 'oauth_facebook' });
 
   const onSelectAuth = async (strategy: Strategy) => {
     const selectedAuth = {
       [Strategy.Google]: googleAuth,
-      [Strategy.Apple]: appleAuth,
-      [Strategy.Facebook]: facebookAuth,
     }[strategy];
 
     try {
@@ -33,7 +27,7 @@ const Page = () => {
 
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
-        router.back();
+        router.push('/(tabs)');
       }
     } catch (err) {
       console.error('OAuth error', err);
@@ -73,22 +67,12 @@ const Page = () => {
       <View style={{ gap: 20 }}>
         <TouchableOpacity style={styles.btnOutline}>
           <Ionicons name="mail-outline" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>Continue with Phone</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Apple)}>
-          <Ionicons name="md-logo-apple" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>Continue with Apple</Text>
+          <Text style={styles.btnOutlineText}>Continue with Email</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Google)}>
           <Ionicons name="md-logo-google" size={24} style={defaultStyles.btnIcon} />
           <Text style={styles.btnOutlineText}>Continue with Google</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btnOutline} onPress={() => onSelectAuth(Strategy.Facebook)}>
-          <Ionicons name="md-logo-facebook" size={24} style={defaultStyles.btnIcon} />
-          <Text style={styles.btnOutlineText}>Continue with Facebook</Text>
         </TouchableOpacity>
       </View>
     </View>
